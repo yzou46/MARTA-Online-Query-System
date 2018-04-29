@@ -1,0 +1,44 @@
+<html>
+
+<style>
+
+.container {
+    padding: 16px;
+    border: 3px solid #f1f1f1;
+    width: 60%;
+    margin:0 auto;
+}
+
+button {
+    background-color: #4F578C;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+img {
+	width: 30%;
+}
+
+</style>
+<body>
+{% block content %} 
+<div class="container">
+	<img src="http://mercedesbenzstadium.com/wp-content/uploads/2017/06/marta.png" alt="Marta">
+	<h2>Welcome to MARTA breezecard management system</h2>
+	<form action="{{ url_for('login') }}">
+		<button type="submit">Enter</button>
+	</form>
+</div>
+{% endblock %}
+
+</body>
+</html>

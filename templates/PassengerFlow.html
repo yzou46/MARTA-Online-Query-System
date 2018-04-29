@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+  <style>
+  .container {
+    padding: 16px;
+    border: 3px solid #f1f1f1;
+    width: 60%;
+    margin:0 auto;
+  }
+
+  button {
+    background-color: #4F578C;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+  }
+
+  button:hover {
+      opacity: 0.8;
+  }
+
+  input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.scrollit {
+    overflow:scroll;
+    height: 300px;
+    border: 1px solid #68696F;
+}
+
+table {
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+thead {
+    background-color: #494A4D;
+    color: white;  
+}
+
+th {
+    cursor: pointer;
+}
+
+th, td {
+    text-align: left;
+    padding: 16px;
+}
+
+.notfirst:hover {
+    background-color: #3E59B7;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+</style>
+<body>
+	<!-- <h2>Cookie: Start:{{ck[0]}}	End:{{ck[1]}}</h2> -->
+   <body>
+   	<div class="container">
+    <h1 style="text-align:center;">Passenger Flow Report</h1> 
+   	<form action="{{ url_for('PassengerFlow') }}" method='post'>
+	    <dl>
+	      <h3>Start Time: </h3>
+	      <dt><input type=text name=Start value="{{ck[0]}}" placeholder="yyyy-mm-dd hh:mm:ss" style="color: #992120;">
+		<h3>End Time: </h3>
+	    <dt><input type=text name=End value="{{ck[1]}}" placeholder="yyyy-mm-dd hh:mm:ss" style="color: #992120;">
+	    <button type=submit>Filter</button>
+	    <!-- <dd><input type=submit value=Filter> -->
+	    </dl>
+	  </form>
+
+	<form action="{{ url_for('PassengerFlow') }}" method='get'>
+		<button type=submit>Reset</button>
+	      <!-- <dd><input type=submit value=reset> -->
+	    <!-- </dl> -->
+	  </form>
+
+	  	 <div class="scrollit" style="margin-top: 30px;">
+      	<table id="myTable">
+         	<thead>
+		    <th onclick="sortTable(0)">Station Name</th>
+		    <th>Passengers In</th>
+		    <th>Passengers Out</th>
+			<th>Flow</th>
+			<th>Revenue</th>
+         	</thead>
+         	{% for (Station, PassengerIn, PassengerOut, Flow, Revenue) in rows %}
+            <tr class = "notfirst">
+		        <td>{{Station}}</td>
+		        <td>{{PassengerIn}}</td>
+		        <td>{{PassengerOut}}</td>
+				<td>{{Flow}}</td>
+				<td>{{Revenue}}</td>
+            </tr>
+         	{% endfor %}
+      	</table>
+      </div>
+        <form action="{{ url_for('admin_home') }}">
+   
+      		<button type=submit style="background-color: #992120; margin-top: 30px;">Back</button>
+      	<!-- <dd><input type=submit value=logout> -->
+    	</form>
+    </div>
+   </body>
+</html>
+<script type="text/javascript">
+	function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("myTable");
+  switching = true;
+  //Set the sorting direction to ascending:
+  dir = "asc"; 
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /*check if the two rows should switch place,
+      based on the direction, asc or desc:*/
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      //Each time a switch is done, increase this count by 1:
+      switchcount ++;      
+    } else {
+      /*If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again.*/
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>

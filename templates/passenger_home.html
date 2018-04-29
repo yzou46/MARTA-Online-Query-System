@@ -1,0 +1,190 @@
+<!doctype html>
+
+<html>
+  <style>
+  .container {
+    padding: 16px;
+    border: 3px solid #f1f1f1;
+    width: 60%;
+    margin:0 auto;
+  }
+  .button,
+  button {
+    background-color: #4F578C;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .button:hover,
+  button:hover {
+      opacity: 0.8;
+  }
+
+  input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  .wrapper {
+    text-align: center;
+  }
+
+  table {
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+thead {
+    background-color: #494A4D;
+    color: white;  
+}
+
+th {
+    cursor: pointer;
+}
+
+th, td {
+    text-align: left;
+    padding: 16px;
+}
+
+.notfirst:hover {
+    background-color: #3E59B7;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+.scrollit {
+    overflow:scroll;
+    height: 300px;
+    border: 1px solid #68696F;
+}
+
+  </style>
+  <body>
+    
+ 
+	<!-- <h2>Cookie {{cks["CardNumber"]}},   {{cks["CardInTrip"]}},	{{cks["StartStation"]}}</h2> -->
+  <div class="container">
+    <h1 style="text-align:center;">Welcome to MARTA</h1>  
+    
+<!--     <div>
+  	<h3 style="display: inline;">Cards:</h3>
+      
+      <select name="Cards" class="selectpicker form-control" onchange="this.form.submit()" style="display: inline;">
+        {% for (c,) in Cards %}
+          <option value= {{c}}>{{ c }}</option>
+		    {% endfor %}              
+	    </select> -->
+<!--       <input type="submit" value="Select" class="button" style="width: 100px; display: inline; margin-left: 30px;"> -->
+      <!-- </div> -->
+
+
+<form action="{{ url_for('passengerManageCard',error = 'default')}}">
+      <button type=submit style="background-color: #992120;">Manage Cards</button>
+      <!-- <dd><input type=submit value=ManageCard> -->
+</form>
+
+<form action="{{ url_for('passenger_home') }}" method='post'>
+    <div class="scrollit" style="margin-top: 30px;">
+    <table id="myTable">
+          <thead>
+            <th onclick="sortTable(0)">Card</th>
+          </thead>
+          <tbody>
+          {% for (c,) in Cards %}
+            <tr class = "notfirst" name=Card>
+              <td>{{c}}</td>
+            </tr>
+          {% endfor %}
+         </tbody>
+    </table>
+  </div>
+
+ <div style="margin-top: 30px;">
+  <h3 style="display: inline;">Card Number: </h3>
+<!--   <p style="color: #992120; display: inline; margin-left: 75px;"><b>{{cks["CardNumber"]}}</b></p> -->
+  <input type=text placeholder="Enter 16-digit card number.." value="{{cks["CardNumber"]}}"  name="Cards" style="display: inline; width: 200px; margin-left: 75px;">
+  <button type=submit style="width: 200px; display: inline; margin-left: 30px;">Select Card</button>
+  </div>
+
+  <div style="margin-top: 30px;">
+  	<h3 style="display: inline;">Balance: </h3> 
+    <p style="color: #992120; display: inline; margin-left: 125px;"><b>$ {{value}}</b></p>
+  </div>
+</form>
+  
+<form action="{{ url_for('passengerStartTrip') }}" method='post'>
+    <dl>
+      <td>
+<!-- 	<h3>Card:</h3>
+      <dt><input type=text name=Card> -->
+          <h4 style="display: inline;">Start at:</h4>
+            {% if cks["CardInTrip"] != true %}
+              <select name="Start" style="display: inline; margin-left: 15px;">
+                {% for (n, i) in Stations %}
+                  <option name="{{ i }}" SELECTED>{{ i }}</option>
+                {% endfor %}              
+              </select>
+              <button type=submit style="width: 200px; display: inline; margin-left: 30px;">Start Trip</button>
+            {% endif %}
+
+            {% if cks["CardInTrip"] == true %}
+              <select name="Start" style="display: inline; margin-left: 15px;" disabled>
+                {% for (n, i) in Stations %}
+                  <option name="{{ i }}" SELECTED>{{ i }}</option>
+                {% endfor %}              
+              </select>
+              <p style="display: inline; margin-left: 30px; color: #067B1D;"><b>Trip In Progress</b></p>
+            {% endif %}
+
+      </td>
+
+      <!-- <dd><input type=submit value=StartTrip> -->
+    </dl>
+  </form>
+	
+
+<form action="{{ url_for('passengerEndTrip') }}" method='post'>
+    <dl>
+      <td>
+<!-- 	<h3>Card:</h3>
+      <dt><input type=text name=Card> -->
+          <h4 style="display: inline;">Ending at:</h4>
+            <select name="End" style="display: inline;">
+              {% for (n, i) in Stations %}
+                <option name="{{ i }}" SELECTED>{{ i }}</option>
+		{% endfor %}               
+	</select>
+  <button type=submit style="width: 200px; display: inline; margin-left: 30px;">End Trip</button>
+      </td>
+      
+      <!-- <dd><input type=submit value=EndTrip> -->
+    </dl>
+  </form>
+<form action="{{ url_for('passengerViewTrip') }}">
+    <dl>
+      <button type=submit>View Trip History</button>
+      <!-- <dd><input type=submit value=ViewTripHistroy> -->
+    </dl>
+  </form>
+<form action="{{ url_for('logout') }}">
+    <dl>
+      <button type=submit style="background-color: #992120;">Log Out</button>
+      <!-- <dd><input type=submit value=logout> -->
+    </dl>
+  </form>
+</div>
+
+</body>
+</html>

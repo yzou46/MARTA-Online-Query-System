@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <style>
+  .container {
+    padding: 16px;
+    border: 3px solid #f1f1f1;
+    width: 60%;
+    margin:0 auto;
+  }
+
+  button {
+    background-color: #4F578C;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+  }
+
+  button:hover {
+      opacity: 0.8;
+  }
+
+  .floating-box {
+    display: inline-block; 
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    text-align: center;
+}
+
+
+  </style>
+
+  <body>
+{% block body %}
+  <div class="container">
+    <h1 style="text-align:center;">Station Detail - {{info[1]}}	{{info[0]}}</h1>
+    <form action="{{ url_for('ViewStationDetail') }}" method='post'>
+          <h3>Fare ($):</h3>
+          <input type=text name=fare value="{{info[2]}}" style="color: #992120; font-size: 14px;"> 
+
+          <h3>Nearest Intersection: </h3>
+          <input type=text name=Intersection value="{{intersection}}" style="color: #992120; font-size: 14px; width: 40%"> 
+
+        <td>
+              <h3>Station Status: </h3>
+              <h4 style="color: #992120;">{{x}}</h4>
+              <h3>Change Station Status To:</h3>
+              <select name="Closed" class="selectpicker form-control">
+                	<option value=0>Open</option>
+  		            <option value=1>Closed</option>
+              </select>
+        </td>
+        <dl>
+          <button type=submit style="margin-top: 30px;" >Update</button>
+        </dl>        
+    </form>
+
+    <form action="{{ url_for('StationManagement') }}" class="wrapper">
+      <button type=submit style="width: 200px; margin-top:30px; background-color: #992120;">Back</button>
+    </form>
+
+
+  </div>
+
+{% endblock %}
+
+   </body>
+</html>

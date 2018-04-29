@@ -1,0 +1,96 @@
+<html>
+
+<style>
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.container {
+    padding: 16px;
+    border: 3px solid #f1f1f1;
+    width: 60%;
+    margin:0 auto;
+}
+
+.field_set{
+  border-color: #f1f1f1;
+  border-style: solid;
+}
+
+button {
+    background-color: #4F578C;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+</style>
+<body>
+
+{%block body %}
+  {% if error %}<h2 class=error style="color: #C70039;"><strong>Error:</strong> {{ error }}</h2>{% endif %}
+<div class="container">  	
+<h1 style="text-align:center;">Create a Marta account</h1>
+<form action="{{ url_for('register') }}" method="post">
+	<dl>
+	  <dt><b>Username:</b>
+      <dt><input type=text name=username placeholder="Enter Username" required>
+      <dt><b>Emaill address:</b>
+      <dt><input type=text name=email placeholder="Enter Email" required>	
+      <dt><b>Password:</b>
+      <dt><input type=password name=passwordone placeholder="Enter Password" id="password" required>
+      <dt><b>Confirm Password:</b>
+      <dt><input type=password name=passwordtwo placeholder="Confirm Password" id="confirm_password" required>
+    </dl>
+	<fieldset class="field_set">
+		<legend><b>Breeze Card</b></legend>
+		<input type="radio" name="breezecard" value="old" checked> Use my existing Breeze Card<br>
+		<br>
+		<b style="font-size: 14px;">Card Number</b><br>
+		<input type="text" name="cardnumber" placeholder="Enter Breezecard Number"><br>
+		<input type="radio" name="breezecard" value="new" checked style="margin-top: 40px;"> Get a new Breeze Card<br>
+	</fieldset>
+	<form action="{{ url_for('register') }}">
+    	<button style="margin-top: 30px;" type="submit" >Create Account</button> 
+  </form> 
+  <h5>Already registered? Please login:</h5>
+  <form action="{{ url_for('login') }}">
+    <button type="submit" >Log In</button> 
+  </form>  
+</form>
+</div>
+	{%endblock%}
+
+
+</body>
+</html>
+
+<script type="text/javascript">
+  var password = document.getElementById("password")
+  , confirm_password = document.getElementById("confirm_password");
+
+  function validatePassword(){
+    if(password.value != confirm_password.value) {
+      confirm_password.setCustomValidity("Passwords Don't Match");
+    } else {
+      confirm_password.setCustomValidity('');
+    }
+  }
+
+  password.onchange = validatePassword;
+  confirm_password.onkeyup = validatePassword;
+  
+</script>

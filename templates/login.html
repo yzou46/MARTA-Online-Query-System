@@ -1,0 +1,60 @@
+<html>
+
+<style>
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.container {
+    padding: 16px;
+    border: 3px solid #f1f1f1;
+    width: 60%;
+    margin:0 auto;
+}
+
+button {
+    background-color: #4F578C;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+</style>
+<body>
+
+{% block body %}
+  <div class="container">
+  <h1 style="text-align:center;">Log In</h1>
+  <form action="{{ url_for('login') }}" method="post">
+    
+    <dl>
+      {% if error %}<h2 class=error style="color: #C70039;"><strong>Error:</strong> {{ error }}{% endif %}</h2>
+      <dt><b>Username:</b>
+      <dt><input type="text" placeholder="Enter Username" name="username">
+      <dt><b>Password:</b>
+      <dt><input type="password" placeholder="Enter Password" name="password">
+    </dl> 
+    <button type="submit">Login</button>   
+  </form>
+  <h5>New user? Please register:</h5>
+  <form action="{{ url_for('register') }}">
+    <button type="submit" >Register</button> 
+  </form>  
+
+  </div>
+{% endblock %}
+
+</body>
+</html>

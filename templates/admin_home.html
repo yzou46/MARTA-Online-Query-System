@@ -1,0 +1,58 @@
+<html>
+
+<style>
+.container {
+    padding: 16px;
+    border: 3px solid #f1f1f1;
+    width: 60%;
+    margin:0 auto;
+}
+
+button {
+    background-color: #4F578C;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+</style>
+
+<body>
+{% block body %} 
+  <div class="container">
+  <h1 style="text-align:center;">Administrator</h1>
+  <form action="{{ url_for('StationManagement') }}">
+    <dl>
+      <button type=submit>Station Management</button>
+    </dl>
+  </form>
+  <form action="{{ url_for('SuspendedCards') }}">
+    <dl>
+      <button type=submit>Suspended Cards</button>
+    </dl>
+  </form>
+  <form action="{{ url_for('BreezeCardManagement', error='default') }}">
+    <dl>
+      <button type=submit>Breeze Card Management</button>
+    </dl>
+  </form>
+  <form action="{{ url_for('PassengerFlow') }}">
+    <dl>
+      <button type=submit>Passenger Flow Reprot</button>
+    </dl>
+  </form>	
+  <form action="{{ url_for('logout') }}">
+    <button type=submit style="margin-top: 30px; background-color: #992120">Log Out</button>
+  </form>
+  </div>
+{% endblock %}
+
+</body>
+</html>

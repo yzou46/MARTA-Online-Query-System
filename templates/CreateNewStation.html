@@ -1,0 +1,77 @@
+<!doctype html>
+
+<html>
+  <style>
+  .container {
+    padding: 16px;
+    border: 3px solid #f1f1f1;
+    width: 60%;
+    margin:0 auto;
+  }
+
+  button {
+    background-color: #4F578C;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+  }
+
+  button:hover {
+      opacity: 0.8;
+  }
+
+  input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  </style>
+
+  <body>
+  {% block body %}
+  <div class="container">
+    <h1 style="text-align:center;">CreateNewStaion</h1>
+    {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    <form action="{{ url_for('CreateNewStation') }}" method='post'>
+      <dl>
+        <h3>StationName:</h3>
+        <dt><input type=text name=StationName required></dt>
+        <h3>StopId:</h3>
+        <dt><input type=text name=StopID required></dt>
+        <h3>Entry Fare:</h3>
+        <dt><input type=text name=Fare required></dt>
+        <td>
+  	    <h3>Station Type:</h3>
+          <select name="isTrain" class="selectpicker form-control">
+            <option value=0>Bus Station</option>
+  		      <option value=1>Train Station</option>
+          </select>
+        </td>
+        <h3>Nearest Intersection:</h3>
+        <dt><input type=text name=Intersection>
+        <td>
+  	    <h3>Status:</h3>
+          <select name="Closed" class="selectpicker form-control">
+            <option value=0>Open</option>
+  		      <option value=1>Closed</option>
+          </select>
+        </td>
+        <button type=submit style="margin-top: 30px;">Create Station</button>
+        <!-- <dt><input type=submit value=CreateStation> -->
+      </dl>
+    </form>
+    <form action="{{ url_for('StationManagement') }}">
+      <button type=submit style="background-color: #992120;">Back</button>
+    </form>
+  </div>
+  {% endblock %}
+
+</body>
+</html>
